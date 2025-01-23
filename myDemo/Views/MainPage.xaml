@@ -1,0 +1,95 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="myDemo.Views.MainPage"
+             xmlns:viewmodels="clr-namespace:myDemo.ViewModels"
+             x:DataType="viewmodels:MainPageViewModel"
+             BackgroundColor="#F0F0F0"
+             Padding="30">
+
+    <ScrollView>
+        <StackLayout Spacing="20" HorizontalOptions="Center">
+
+            <!-- Page Title -->
+            <Label Text="Package and Signature Capture"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="Black"
+                   HorizontalOptions="Center"/>
+
+            <!-- Camera View -->
+            <Border StrokeThickness="2" Stroke="#CCCCCC" BackgroundColor="White" Padding="5">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <toolkit:CameraView x:Name="MyCamera"
+                                    MediaCaptured="MyCamera_MediaCaptured"
+                                    HeightRequest="250"
+                                    WidthRequest="400"
+                                    HorizontalOptions="Center"/>
+            </Border>
+
+            <!-- Capture Button -->
+            <Button Text="📸 Capture Packages"
+                    Clicked="Capture_Button_Clicked"
+                    BackgroundColor="#007ACC"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    WidthRequest="200"
+                    HorizontalOptions="Center"/>
+
+            <!-- Captured Image View -->
+            <Border StrokeThickness="2" Stroke="#CCCCCC" BackgroundColor="White" Padding="5">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <Image x:Name="MyImage"
+                       Source="{Binding ImageSource}"
+                       Aspect="AspectFit"
+                       HeightRequest="250"
+                       WidthRequest="400"
+                       HorizontalOptions="Center"/>
+            </Border>
+
+            <!-- Signature Drawing Area -->
+            <Border StrokeThickness="2" Stroke="#CCCCCC" BackgroundColor="LightGray" Padding="5">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <!--<Border.Padding>
+                    <OnPlatform x:TypeArguments="Thickness" Default="20">
+                        <On Platform="iOS" Value="0,20,0,0" />
+                        <On Platform="Android" Value="10,20,20,10" />
+                    </OnPlatform>
+                </Border.Padding>-->
+                <mct:DrawingView x:Name="DrawView"
+                                 IsMultiLineModeEnabled="True"
+                                 LineColor="Black"
+                                 LineWidth="2"
+                                 Lines="{Binding Lines}"
+                                 HeightRequest="150"
+                                 HorizontalOptions="Fill"/>
+            </Border>
+
+            <!-- Action Buttons -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="20">
+                <Button Text="❌ Clear Signature"
+                        Command="{Binding ClearSignatureCommand}"
+                        BackgroundColor="#D9534F"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="10"/>
+                <Button Text="✔ Accept Signature"
+                        Command="{Binding SaveSignatureCommand}"
+                        BackgroundColor="#5CB85C"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="10"/>
+            </StackLayout>
+
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>
